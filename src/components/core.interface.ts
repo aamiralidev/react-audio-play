@@ -12,6 +12,7 @@ export interface AudioInterface {
   volume?: number;
   volumePlacement?: 'top' | 'bottom';
   hasKeyBindings?: boolean;
+  totalDuration?: number;
   onPlay?: () => void;
   onPause?: () => void;
   onEnd?: () => void;

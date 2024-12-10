@@ -22,6 +22,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
       volume = 100,
       volumePlacement = 'top',
       hasKeyBindings = true,
+      totalDuration = 0,
       onPlay,
       onPause,
       onEnd,
@@ -44,6 +45,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
     const [speakerIcon, setSpeakerIcon] = useState<string>(getVolumePath(volume));
     const [coefficient, setCoefficient] = useState<number>(0);
     const [hasError, setHasError] = useState<boolean>(false);
+    const duration = useState<number>(totalDuration);
 
     useEffect(() => {
       handleReload();
@@ -51,7 +53,8 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
     }, [src]);
 
     useEffect(() => {
-      if (audioRef.current?.duration && audioRef.current.duration !== Infinity) {
+      if (duration > 0) { setTotalTime(formatTime(duration)); return; }
+      else if ((audioRef.current?.duration && audioRef.current.duration !== Infinity)) {
         setTotalTime(formatTime(audioRef.current.duration));
       }
     }, [audioRef.current?.duration]);
@@ -82,6 +85,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
     }));
 
     const getTotalDuration = () => {
+      if (duration > 0) { return duration; }
       if (!audioRef.current) {
         return 0;
       }
@@ -170,6 +174,12 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
     };
 
     const handleLoadedMetaData = () => {
+      if (duration > 0) {
+        setTotalTime(formatTime(duration));
+        const currentTime = audioRef.current.duration * coefficient;
+        audioRef.current.currentTime = currentTime;
+        return;
+      }
       if (audioRef.current?.duration && audioRef.current?.duration !== Infinity) {
         setTotalTime(formatTime(audioRef.current.duration ?? 0));
         const currentTime = audioRef.current.duration * coefficient;
@@ -280,7 +290,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
           setCanPlay(false);
           audioRef.current.load();
           setCoefficient(getCoefficient(event));
-        } else if (audioRef.current.duration) {
+        } else if (audioRef.current.duration || duration > 0) {
           audioRef.current.currentTime = getTotalDuration() * getCoefficient(event);
         }
       }
