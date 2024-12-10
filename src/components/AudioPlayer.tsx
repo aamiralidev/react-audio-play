@@ -176,8 +176,10 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
     const handleLoadedMetaData = () => {
       if (duration > 0) {
         setTotalTime(formatTime(duration));
-        const currentTime = audioRef.current.duration * coefficient;
-        audioRef.current.currentTime = currentTime;
+        if (audioRef.current) {
+          const currentTime = audioRef.current?.duration * coefficient;
+          audioRef.current.currentTime = currentTime;
+        }
         return;
       }
       if (audioRef.current?.duration && audioRef.current?.duration !== Infinity) {
