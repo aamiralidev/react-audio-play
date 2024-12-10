@@ -45,7 +45,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
     const [speakerIcon, setSpeakerIcon] = useState<string>(getVolumePath(volume));
     const [coefficient, setCoefficient] = useState<number>(0);
     const [hasError, setHasError] = useState<boolean>(false);
-    const duration = useState<number>(totalDuration);
+    const duration = totalDuration;
 
     useEffect(() => {
       handleReload();
