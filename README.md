@@ -187,3 +187,5 @@ Contributions are welcome! If you find any issues or have suggestions, feel free
 
 Enjoy using react-audio-play in your React applications, and we hope it enhances your audio experience with ease and flexibility. If you have any questions or need further assistance, don't hesitate
 to reach out to us! Happy coding! 🎶
+
+This project is tested with BrowserStack.
