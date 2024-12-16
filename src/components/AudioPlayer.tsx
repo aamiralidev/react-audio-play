@@ -376,6 +376,9 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
     };
 
     const handleOnPlay = () => {
+      if (audioRef.current) {
+        audioRef.current.muted = false;
+      }
       setIsPlaying(true);
     };
 
@@ -487,6 +490,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
           onLoadedMetadata={handleLoadedMetaData}
           onTimeUpdate={handleUpdateProgress}
           onVolumeChange={handleUpdateVolume}
+          muted
         >
           <source src={src} type="audio/mpeg" />
         </audio>
