@@ -178,7 +178,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
         setTotalTime(formatTime(duration));
         if (audioRef.current) {
           const currentTime = audioRef.current?.duration * coefficient;
-          audioRef.current.currentTime = currentTime;
+          // audioRef.current.currentTime = currentTime;
         }
         return;
       }
@@ -287,6 +287,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
     }
 
     const rewind = (event: MouseEvent | TouchEvent | React.MouseEvent<HTMLDivElement>) => {
+      console.log("Rewind called")
       if (inRange(event) && audioRef.current) {
         if (preload === 'none' && !audioRef.current.duration) {
           setCanPlay(false);
@@ -305,6 +306,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
     };
 
     const handleRewindDragging = () => {
+      console.log("Rewind Drag handling")
       currentlyDragged.current = rewindPin.current;
       const events = getDeviceEventNames();
       window.addEventListener(events.move, rewind, false);
