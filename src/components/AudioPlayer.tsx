@@ -185,7 +185,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef | undefined, AudioInterface
       if (audioRef.current?.duration && audioRef.current?.duration !== Infinity) {
         setTotalTime(formatTime(audioRef.current.duration ?? 0));
         const currentTime = audioRef.current.duration * coefficient;
-        audioRef.current.currentTime = currentTime;
+        // audioRef.current.currentTime = currentTime;
       }
     };
 
